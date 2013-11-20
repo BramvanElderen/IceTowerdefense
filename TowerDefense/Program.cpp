@@ -12,6 +12,6 @@ int main (int argc, char* argv[])
 	EventReciever* eventReciever = new EventReciever(device,gameManager);
 	device->setEventReceiver(eventReciever);
 	gameManager->Start();
-
+	//hoi
 	return 0;
 }

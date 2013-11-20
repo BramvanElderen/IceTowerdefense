@@ -15,6 +15,7 @@ GameManager::GameManager()
 	m_guienv = m_sceneManager->getGUIEnvironment();
 	m_gui = new Gui(m_guienv);
 	
+	m_deltaTimer = new DeltaTimer(m_device->getTimer());
 
 }
 
@@ -23,8 +24,8 @@ void GameManager::Start()
 	m_sceneManager->addCubeSceneNode();
 	while (m_device->run())
 	{
-		
-
+		//TIMER FOR PATH/CREATURES/PROJECTILES AND WHATEVER
+		m_playground->Update(m_deltaTimer->GetDelta());
 		m_videoDriver->beginScene(true, true, irr::video::SColor(255,100,101,140));
 
 
@@ -60,7 +61,7 @@ void GameManager::OnEvent(int p_event)
 		//TODO
 		break;
 	case EnumEvent::BUTTON_STARTGAME:
-		//TODO
+		m_playground->StartNextWave();
 		break;
 	case EnumEvent::BUTTON_TOWER:
 		//TODO

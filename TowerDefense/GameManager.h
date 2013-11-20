@@ -3,6 +3,7 @@
 
 #include "PlayGround.h"
 #include "Gui.h"
+#include "DeltaTimer.h"
 
 class GameManager
 {
@@ -26,5 +27,6 @@ private:
 
 	PlayGround* m_playground;
 	Gui* m_gui;
+	DeltaTimer* m_deltaTimer;
 };
 #endif
