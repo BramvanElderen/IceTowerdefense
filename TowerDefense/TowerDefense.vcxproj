@@ -72,6 +72,7 @@
     <ClCompile Include="EventReciever.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Gui.cpp" />
+    <ClCompile Include="Light.cpp" />
     <ClCompile Include="Path.cpp" />
     <ClCompile Include="Playground.cpp" />
     <ClCompile Include="Program.cpp" />
@@ -88,10 +89,13 @@
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameManagerInterface.h" />
     <ClInclude Include="Gui.h" />
+    <ClInclude Include="Light.h" />
     <ClInclude Include="Path.h" />
+    <ClInclude Include="PathListener.h" />
     <ClInclude Include="PlayGround.h" />
     <ClInclude Include="Sky.h" />
     <ClInclude Include="Terrain.h" />
+    <ClInclude Include="TerrainListener.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Wave.h" />
   </ItemGroup>

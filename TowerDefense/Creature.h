@@ -3,17 +3,17 @@
 
 #include <irrlicht.h>
 
-#include "Path.h"
+#include "PathListener.h"
 #include "Terrain.h"
 class Creature
 {
 public:
-	Creature(irr::scene::ISceneManager* p_sceneManager, Path* p_path);
+	Creature(irr::scene::ISceneManager* p_sceneManager, PathListener* p_path);
 	~Creature();
 	void DecreaseHealthPoints(double p_healthPoints);
 	double GetHealthPoints();
 	irr::core::aabbox3d<irr::f32> GetBoundingbox();
-	void Update(float p_deltaTime);
+	bool Update(float p_deltaTime);
 
 	//Universal methods //TODO entity class
 	void SetMaterialFlags(irr::scene::ISceneNode* p_sceneNode = NULL);
@@ -25,8 +25,7 @@ private:
 	irr::scene::ISceneManager* m_sceneManager;
 	irr::scene::ISceneNode* m_meshSceneNode;
 	irr::scene::IAnimatedMesh* m_animatedMesh;
-	Path* m_path;
-
+	PathListener* m_path;
 };
 
 

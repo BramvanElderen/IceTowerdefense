@@ -1,17 +1,19 @@
 #ifndef _EVENTRECIEVER_H_
 #define _EVENTRECIEVER_H_
 
-#include "GameManager.h"
+#include <irrlicht.h>
+#include "GameManagerInterface.h"
+#include "Enum.h"
 
 class EventReciever : public irr::IEventReceiver
 {
 public:
-	EventReciever(irr::IrrlichtDevice* p_device, GameManager* p_gameManager);
+	EventReciever(irr::IrrlichtDevice* p_device, GameManagerInterface* p_gameManager);
 	~EventReciever();
 	virtual bool OnEvent(const irr::SEvent& p_event);
 
 private:
 	irr::IrrlichtDevice* m_device;
-	GameManager* m_gameManager;
+	GameManagerInterface* m_gameManager;
 };
 #endif

@@ -25,7 +25,7 @@ irr::scene::ITriangleSelector* Terrain::GenerateTerrain(irr::scene::ISceneManage
 		4												// smoothFactor
 		);
 
-	m_terrain->setMaterialFlag(irr::video::EMF_LIGHTING, false);	
+	m_terrain->setMaterialFlag(irr::video::EMF_LIGHTING, true);	
 	m_terrain->setMaterialTexture(0, driver->getTexture("resources/textures/terrain-texture.jpg"));
 	m_terrain->setMaterialTexture(1, driver->getTexture("resources/textures/detailmap3.jpg"));
 	m_terrain->setMaterialType(irr::video::EMT_DETAIL_MAP);

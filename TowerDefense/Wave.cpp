@@ -3,11 +3,11 @@
 
 Wave::Wave(irr::scene::ISceneManager* p_sceneManager, int p_waveSize)
 {
-	//m_playgroundListener = p_playgroundListener;
 	m_sceneManager = p_sceneManager;
 	m_waveSize = p_waveSize;
 
 	m_creaturesSpawned = 0;
+	m_creatureIsSpawned = false;
 	m_timer = new Timer();
 }
 
@@ -23,13 +23,7 @@ void Wave::StartSpawning()
 	m_timer->Start();
 }
 
-void Wave::ResetAndStopSpawning()
-{
-	m_creaturesSpawned = 0;
-	m_timer->Reset();
-}
-
-bool Wave::SpawnCreature(Path* p_path)
+bool Wave::SpawnCreature(PathListener* p_path)
 {
 	if (m_timer->IsRunning())
 	{
@@ -38,6 +32,7 @@ bool Wave::SpawnCreature(Path* p_path)
 			if (m_timer->GetTime() == 1)
 			{
 				Creature* creature = new Creature(m_sceneManager, p_path);
+				m_creatureIsSpawned = true;
 				m_creatures.push_back(creature);
 				m_timer->Reset();
 				m_creaturesSpawned += 1;
@@ -51,7 +46,6 @@ bool Wave::SpawnCreature(Path* p_path)
 			m_timer->Stop();
 		}
 	}
-
 	return false;
 }
 
@@ -65,33 +59,22 @@ void Wave::updateCreatures(float p_deltaTime)
 	{
 		creature = (*itCreature);
 		++itCreature;
-		creature->Update(p_deltaTime);		
+		if (!creature->Update(p_deltaTime))
+		{
+			
+			m_creatures.remove(creature);
+			delete creature;
+		}	
 	}
 }
 
 
-
-bool Wave::IsActive()
-{
-	return (m_timer->IsRunning());
-}
-
-bool Wave::AreAllCreaturesSpawned()
-{
-	return (m_creaturesSpawned >= m_waveSize);
-}
-
-int Wave::GetCreaturesSpawned()
-{
-	return m_creaturesSpawned;
-}
-
-void Wave::SetWaveSize(int p_waveSize)
-{
-	m_waveSize = p_waveSize;
-}
-
 int Wave::GetWaveSize()
 {
-	return m_waveSize;
+	return m_creatures.size();
+}
+
+bool Wave::IsCreatureSpawned()
+{
+	return m_creatureIsSpawned;
 }

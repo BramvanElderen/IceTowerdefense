@@ -2,8 +2,9 @@
 #define __TERRAIN__H__
 
 #include <irrlicht.h>
+#include "TerrainListener.h"
 
-class Terrain
+class Terrain : public TerrainListener
 {
 public:
 	/**

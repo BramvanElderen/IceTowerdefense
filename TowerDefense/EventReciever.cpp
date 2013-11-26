@@ -1,6 +1,6 @@
 #include "EventReciever.h"
 
-EventReciever::EventReciever(irr::IrrlichtDevice* p_device, GameManager* p_gameManager)
+EventReciever::EventReciever(irr::IrrlichtDevice* p_device, GameManagerInterface* p_gameManager)
 {
 	m_device = p_device;
 	m_gameManager = p_gameManager;

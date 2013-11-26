@@ -18,14 +18,10 @@ public:
 	Wave(irr::scene::ISceneManager* p_sceneManager, int p_waveSize);
 	~Wave();
 	void StartSpawning();
-	void ResetAndStopSpawning();
-	bool SpawnCreature(Path* p_path);
-	bool IsActive();
-	bool AreAllCreaturesSpawned();
-	int GetCreaturesSpawned();
-	void SetWaveSize(int p_waveSize);
+	bool SpawnCreature(PathListener* p_path);
 	int GetWaveSize();
 	void updateCreatures(float p_deltaTime);
+	bool IsCreatureSpawned();
 
 private:
 	irr::scene::ISceneManager* m_sceneManager;
@@ -33,6 +29,7 @@ private:
 	int m_creaturesSpawned;		
 	Timer* m_timer;
 	std::list<Creature*> m_creatures;
+	bool m_creatureIsSpawned;
 };
 
 #endif

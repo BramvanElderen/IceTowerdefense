@@ -21,7 +21,6 @@ GameManager::GameManager()
 
 void GameManager::Start()
 {
-	m_sceneManager->addCubeSceneNode();
 	while (m_device->run())
 	{
 		//TIMER FOR PATH/CREATURES/PROJECTILES AND WHATEVER
@@ -30,7 +29,7 @@ void GameManager::Start()
 
 
 		m_sceneManager->drawAll();
-		m_gui->UpdateGui(0,0,m_videoDriver->getFPS(),0,0);
+		m_gui->UpdateGui(m_playground->GetCurrentWave(),m_playground->GetAmountOfActiveCreatures(),m_videoDriver->getFPS(),0,0);
 		m_videoDriver->endScene();
 	}
 }

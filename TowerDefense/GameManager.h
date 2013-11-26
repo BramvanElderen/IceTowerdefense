@@ -4,14 +4,15 @@
 #include "PlayGround.h"
 #include "Gui.h"
 #include "DeltaTimer.h"
+#include "GameManagerInterface.h"
 
-class GameManager
+class GameManager : public GameManagerInterface
 {
 public:
 	GameManager();
 	~GameManager();
 	void Start();
-	void OnEvent(int);
+	void OnEvent(int p_event);
 	irr::IrrlichtDevice* GetDevice();
 private:
 	

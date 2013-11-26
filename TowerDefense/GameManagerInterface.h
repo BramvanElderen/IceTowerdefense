@@ -1,4 +1,4 @@
-#ifdef _GAMEMANAGERINTERFACE_H_
+#ifndef _GAMEMANAGERINTERFACE_H_
 #define _GAMEMANAGERINTERFACE_H_
 
 /************************************************************************/

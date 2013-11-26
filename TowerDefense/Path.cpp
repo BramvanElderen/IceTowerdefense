@@ -3,13 +3,13 @@
 #include <iostream>
 #include <functional>
 
-Path::Path(irr::core::dimension2d<irr::u32> p_gameDimensions, Terrain* p_terrain)
+Path::Path(irr::core::dimension2d<irr::u32> p_gameDimensions, TerrainListener* p_terrain)
 {
 	m_terrain = p_terrain;
-	InitializePath(p_gameDimensions);
+	//GeneratePath(p_gameDimensions);
 }
 
-void Path::InitializePath(irr::core::dimension2d<irr::u32> p_gameDimensions)
+void Path::GeneratePath(irr::core::dimension2d<irr::u32> p_gameDimensions)
 {
 	float X = (float)p_gameDimensions.Width;
 	float Y = (float)p_gameDimensions.Height;
@@ -53,13 +53,20 @@ irr::core::vector3df Path::FollowPath(irr::core::vector3df* p_currentPosition, f
 	//Calculate distance to end point
 	irr::core::vector3df distance = m_gamePositions[1] -  *p_currentPosition;
 	//Calculate movementspeed
-	float movementSpeed = 12.f / p_currentPosition->getDistanceFrom(m_gamePositions[1]);
+	float movementSpeed = 12.0f / p_currentPosition->getDistanceFrom(m_gamePositions[1]);
 	//calculate new position
 	irr::core::vector3df newPosition = *p_currentPosition + distance * movementSpeed * p_deltaTime * 60;
 	newPosition.Y = m_terrain->GetTerrainHeight(newPosition);
 	irr::core::vector3df result = newPosition;
 	return result;
 }
+
+irr::core::vector3df Path::AdjustRotation(irr::core::vector3df* p_currentPosition)
+{
+	irr::core::vector3df newPosition = m_gamePositions[1] - *p_currentPosition;
+	return newPosition.getHorizontalAngle();
+}
+
 
 float Path::GenerateRandomFloat(float p_lower, float p_upper)
 {
@@ -73,4 +80,8 @@ float Path::GenerateRandomFloat(float p_lower, float p_upper)
 irr::core::vector3df Path::GetStartPosition()
 {
 	return m_gamePositions[0];
+}
+irr::core::vector3df Path::GetEndPosition()
+{
+	return m_gamePositions[1];
 }

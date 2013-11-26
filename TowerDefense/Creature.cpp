@@ -1,7 +1,7 @@
 #include "Creature.h"
 
 Creature::Creature(irr::scene::ISceneManager* p_sceneManager,
-	Path* p_path)	
+	PathListener* p_path)	
 {
 	m_sceneManager = p_sceneManager;
 	m_meshSceneNode = NULL;
@@ -35,7 +35,6 @@ Creature::Creature(irr::scene::ISceneManager* p_sceneManager,
 	m_animatedMesh->setBoundingBox(*boundingbox);
 	m_healthPoints = 20;
 	m_meshSceneNode->setDebugDataVisible(irr::scene::EDS_BBOX);
-
 	m_path = p_path;
 	SetPosition(m_path->GetStartPosition());
 }
@@ -45,12 +44,23 @@ Creature::~Creature()
 	m_meshSceneNode->remove();
 }
 
-void Creature::Update(float p_deltaTime)
+bool Creature::Update(float p_deltaTime)
 {	
 
-	irr::core::vector3df* position = &GetPosition();
+
+	irr::core::vector3df* position = &GetPosition();	
+	m_meshSceneNode->setRotation(m_path->AdjustRotation(position));
 	irr::core::vector3df newPosition = m_path->FollowPath(position,p_deltaTime);
-	SetPosition(newPosition);
+	irr::core::vector3df end = m_path->GetEndPosition();
+	if (newPosition.X < (end.X + 20) && newPosition.X > (end.X - 20))
+	{
+		if (newPosition.Z < (end.Z + 20) && newPosition.Z > (end.Z - 20))
+		{
+			return false;
+		}
+	}
+	SetPosition(newPosition);	
+	return true;
 }
 
 void Creature::DecreaseHealthPoints(double p_healthPoints)
@@ -70,7 +80,7 @@ void Creature::SetMaterialFlags(irr::scene::ISceneNode* p_sceneNode)
 		p_sceneNode = m_meshSceneNode;
 	}
 
-	p_sceneNode->setMaterialFlag(irr::video::E_MATERIAL_FLAG::EMF_LIGHTING, false);
+	p_sceneNode->setMaterialFlag(irr::video::E_MATERIAL_FLAG::EMF_LIGHTING, true);
 	p_sceneNode->setMaterialFlag(irr::video::E_MATERIAL_FLAG::EMF_ANTI_ALIASING, true);
 	p_sceneNode->setMaterialType(irr::video::E_MATERIAL_TYPE::EMT_TRANSPARENT_ALPHA_CHANNEL_REF);
 }
