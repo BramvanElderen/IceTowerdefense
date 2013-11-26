@@ -46,7 +46,7 @@ bool EventReciever::OnEvent(const irr::SEvent& p_event)
 	{
 		if (p_event.MouseInput.isLeftPressed())
 		{
-			//m_gameManager->OnEvent(EnumEvent::BUTTON_QUIT);
+			m_gameManager->OnEvent(EnumEvent::MOUSE_LEFT_CLICK);
 		}				
 	}
 	return false;

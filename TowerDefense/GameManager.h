@@ -29,5 +29,7 @@ private:
 	PlayGround* m_playground;
 	Gui* m_gui;
 	DeltaTimer* m_deltaTimer;
+
+	int m_currentEvent;
 };
 #endif

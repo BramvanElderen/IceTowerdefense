@@ -5,7 +5,7 @@ PlayGround::PlayGround(irr::scene::ISceneManager* p_sceneManager)
 	m_sceneManager = p_sceneManager;
 
 	m_terrain = new Terrain();
-	m_terrain->GenerateTerrain(m_sceneManager,40);
+	m_selector = m_terrain->GenerateTerrain(m_sceneManager,40);
 	m_terrainDimensions = m_terrain->GetTerrainDimensions();
 	m_skybox =  new Sky();
 	m_skybox->GenerateSky(p_sceneManager);
@@ -92,4 +92,54 @@ void PlayGround::InitializeWaves(float p_numberOfWaves)
 	}
 	atWave = 0;
 	waveRunning = false;
+}
+
+
+void PlayGround::CreateTower(irr::core::vector2di p_position)
+{	
+	Tower* towerAtPosition = GetTowerAtPosition(p_position);
+
+	if (towerAtPosition != NULL)
+	{
+		return;
+	}
+
+	irr::scene::ISceneCollisionManager* collisionManager = m_sceneManager->getSceneCollisionManager();
+	irr::core::line3d<irr::f32> line = collisionManager->getRayFromScreenCoordinates(p_position, m_sceneManager->getActiveCamera());
+	irr::core::vector3df towerPosition;
+	irr::core::triangle3df triangle;
+	irr::scene::ISceneNode* sceneNodeOut;
+
+	collisionManager->getCollisionPoint(line, m_selector, towerPosition, triangle, sceneNodeOut);
+	m_towers.push_back(new Tower(m_sceneManager, towerPosition));
+}
+
+void PlayGround::SellTower(irr::core::vector2di p_position)
+{
+	//AINT WORKING TODO
+	Tower* tower = GetTowerAtPosition(p_position);
+	
+	if (tower != NULL)
+	{
+		m_towers.remove(tower);
+		delete tower;		
+	}
+}
+
+Tower* PlayGround::GetTowerAtPosition(irr::core::vector2di p_position)
+{
+	irr::scene::ISceneNode* sceneNode = m_sceneManager->getSceneCollisionManager()->getSceneNodeFromScreenCoordinatesBB(p_position);
+
+	std::list<Tower*>::iterator itTower;
+	std::list<Tower*>::iterator itTowerEnd = m_towers.end();
+
+	for (itTower = m_towers.begin(); itTower != itTowerEnd; ++itTower)
+	{
+		if (sceneNode == (*itTower)->GetSceneNode())
+		{
+			return (*itTower);
+		}
+	}
+
+	return NULL;
 }

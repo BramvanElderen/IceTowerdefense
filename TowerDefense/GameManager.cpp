@@ -17,6 +17,7 @@ GameManager::GameManager()
 	
 	m_deltaTimer = new DeltaTimer(m_device->getTimer());
 
+	m_currentEvent = EnumCurrentEvent::EMPTY;
 }
 
 void GameManager::Start()
@@ -57,13 +58,26 @@ void GameManager::OnEvent(int p_event)
 		m_device->closeDevice();
 		break;
 	case EnumEvent::BUTTON_SELL:
-		//TODO
+		m_currentEvent = EnumCurrentEvent::TOWER_SELL;
 		break;
 	case EnumEvent::BUTTON_STARTGAME:
 		m_playground->StartNextWave();
 		break;
 	case EnumEvent::BUTTON_TOWER:
-		//TODO
+		m_currentEvent = EnumCurrentEvent::TOWER_BUY;
+		break;
+	case EnumEvent::MOUSE_LEFT_CLICK:		
+		irr::core::vector2di mousePositions = m_device->getCursorControl()->getPosition();
+		if (m_currentEvent == EnumCurrentEvent::TOWER_BUY)
+		{		
+			m_playground->CreateTower(mousePositions);
+			m_currentEvent = EnumCurrentEvent::EMPTY;
+		}
+		if (m_currentEvent == EnumCurrentEvent::TOWER_SELL)
+		{
+			m_playground->SellTower(mousePositions);
+			m_currentEvent = EnumCurrentEvent::EMPTY;
+		}
 		break;
 	//end switch case
 	}
