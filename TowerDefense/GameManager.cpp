@@ -67,11 +67,11 @@ void GameManager::OnEvent(int p_event)
 		m_currentEvent = EnumCurrentEvent::TOWER_BUY;
 		break;
 	case EnumEvent::MOUSE_LEFT_CLICK:		
-		irr::core::vector2di mousePositions = m_device->getCursorControl()->getPosition();
+		irr::core::vector2d<irr::s32> mousePositions = m_device->getCursorControl()->getPosition();
 		if (m_currentEvent == EnumCurrentEvent::TOWER_BUY)
 		{		
 			m_playground->CreateTower(mousePositions);
-			m_currentEvent = EnumCurrentEvent::EMPTY;
+			//m_currentEvent = EnumCurrentEvent::EMPTY;
 		}
 		if (m_currentEvent == EnumCurrentEvent::TOWER_SELL)
 		{

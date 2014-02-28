@@ -22,7 +22,7 @@ public:
 	~PlayGround();
 	void StartNextWave();
 	void CreateTower(irr::core::vector2di p_position);
-	void SellTower(irr::core::vector2di p_position);
+	void SellTower(irr::core::vector2d<irr::s32> p_position);
 	Tower* GetTowerAtPosition(irr::core::vector2di p_position);
 	void Update(float p_deltaTime);
 	int GetCurrentWave();

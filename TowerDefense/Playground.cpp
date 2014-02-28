@@ -10,7 +10,8 @@ PlayGround::PlayGround(irr::scene::ISceneManager* p_sceneManager)
 	m_skybox =  new Sky();
 	m_skybox->GenerateSky(p_sceneManager);
 	m_path = new Path(m_terrainDimensions, (TerrainListener*)m_terrain);
-	m_sun = new Light(p_sceneManager);
+	m_sun = new Light(p_sceneManager, EnumLight::LIGHT_NORMAL, m_terrainDimensions);
+	new Light(p_sceneManager, EnumLight::LIGHT_AMBIENT, m_terrainDimensions);
 	m_numberOfWaves = 2;
 	InitializeWaves(m_numberOfWaves);
 }
@@ -114,16 +115,34 @@ void PlayGround::CreateTower(irr::core::vector2di p_position)
 	m_towers.push_back(new Tower(m_sceneManager, towerPosition));
 }
 
-void PlayGround::SellTower(irr::core::vector2di p_position)
+void PlayGround::SellTower(irr::core::vector2d<irr::s32> p_position)
 {
-	//AINT WORKING TODO
-	Tower* tower = GetTowerAtPosition(p_position);
 	
-	if (tower != NULL)
+	irr::scene::ISceneNode* sceneNodeOut;
+	sceneNodeOut = m_sceneManager->getSceneCollisionManager()->getSceneNodeFromScreenCoordinatesBB(p_position);
+	
+
+
+	std::list<Tower*>::iterator itTower;
+	std::list<Tower*>::iterator itTowerEnd = m_towers.end();
+	Tower* tower;
+	for (itTower = m_towers.begin(); itTower != itTowerEnd; ++itTower)
 	{
-		m_towers.remove(tower);
-		delete tower;		
+		if (sceneNodeOut  == (*itTower)->GetSceneNode())
+		{
+			sceneNodeOut->remove();
+			return;
+		}
 	}
+	
+	////AINT WORKING TODO
+	//Tower* tower = GetTowerAtPosition(p_position);
+	//
+	//if (tower != NULL)
+	//{
+	//	m_towers.remove(tower);
+	//	delete tower;		
+	//}
 }
 
 Tower* PlayGround::GetTowerAtPosition(irr::core::vector2di p_position)

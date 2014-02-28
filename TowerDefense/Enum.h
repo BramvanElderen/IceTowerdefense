@@ -20,11 +20,25 @@ enum EnumEvent
 	MOUSE_LEFT_CLICK
 };
 
+/************************************************************************/
+/* @brief This enum is used to remember certain events from the game.
+/* @author Bram van Elderen
+/************************************************************************/
 enum EnumCurrentEvent
 {
 	TOWER_BUY,
 	TOWER_SELL,
 	EMPTY
+};
+
+/************************************************************************/
+/* @brief This enum is used to define lights
+/* @author Bram van Elderen
+/************************************************************************/
+enum EnumLight
+{
+	LIGHT_AMBIENT,
+	LIGHT_NORMAL
 };
 
 #endif

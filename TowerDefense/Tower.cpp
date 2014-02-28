@@ -126,9 +126,9 @@ void Tower::SetMaterialFlags(irr::scene::ISceneNode* p_sceneNode)
 		p_sceneNode = m_meshSceneNode;
 	}
 
-	p_sceneNode->setMaterialFlag(irr::video::E_MATERIAL_FLAG::EMF_LIGHTING, false);
+	p_sceneNode->setMaterialFlag(irr::video::E_MATERIAL_FLAG::EMF_LIGHTING, true);
 	p_sceneNode->setMaterialFlag(irr::video::E_MATERIAL_FLAG::EMF_ANTI_ALIASING, true);
-	p_sceneNode->setMaterialType(irr::video::E_MATERIAL_TYPE::EMT_TRANSPARENT_ALPHA_CHANNEL_REF);
+	//p_sceneNode->setMaterialType(irr::video::E_MATERIAL_TYPE::EMT_TRANSPARENT_ALPHA_CHANNEL_REF);
 }
 
 irr::core::vector3df Tower::GetPosition()
